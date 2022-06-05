@@ -11,6 +11,8 @@ export class ClientPlayer<ISharedVars> {
         onNet('player-set-variable', this.EVENT_SetSharedVariable);
         onNet('play-animation', this.EVENT_PlayAnimation);
         onNet('stop-animation', this.EVENT_StopAnimation);
+        onNet('fade-out-screen', this.EVENT_FadeOutScreen);
+        onNet('fade-in-screen', this.EVENT_FadeInScreen);
 
         setInterval(() => {
             const [x, y, z] = GetEntityCoords(this.playerPed, false);
@@ -33,6 +35,14 @@ export class ClientPlayer<ISharedVars> {
         this._y = v3.y;
         this._z = v3.z;
         SetEntityCoords(this.playerPed, v3.x, v3.y, v3.z, false, false, false, false);
+    }
+
+    private EVENT_FadeInScreen(timeMS: number) {
+        DoScreenFadeIn(timeMS);
+    }
+
+    private EVENT_FadeOutScreen(timeMS: number) {
+        DoScreenFadeOut(timeMS);
     }
 
     private EVENT_SetSharedVariable(key: string, value: any) {
