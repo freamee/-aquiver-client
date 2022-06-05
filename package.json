@@ -1,10 +1,12 @@
 {
   "name": "@freamee/client",
   "version": "1.0.0",
-  "description": "",
+  "description": "- Aquiver resources framework helper.",
   "main": "lib/index.js",
+  "types": "lib",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
