@@ -8,11 +8,11 @@ export class ClientPlayer<ISharedVars> {
     private _z: number;
 
     constructor() {
-        onNet('player-set-variable', this.EVENT_SetSharedVariable);
-        onNet('play-animation', this.EVENT_PlayAnimation);
-        onNet('stop-animation', this.EVENT_StopAnimation);
-        onNet('fade-out-screen', this.EVENT_FadeOutScreen);
-        onNet('fade-in-screen', this.EVENT_FadeInScreen);
+        onNet('player-set-variable', (key: string, value: any) => this.EVENT_SetSharedVariable(key, value));
+        onNet('play-animation', (dict: string, anim: string, flag: number) => this.EVENT_PlayAnimation(dict, anim, flag));
+        onNet('stop-animation', () => this.EVENT_StopAnimation());
+        onNet('fade-out-screen', (timeMS: number) => this.EVENT_FadeOutScreen(timeMS));
+        onNet('fade-in-screen', (timeMS: number) => this.EVENT_FadeInScreen(timeMS));
 
         setInterval(() => {
             const [x, y, z] = GetEntityCoords(this.playerPed, false);
