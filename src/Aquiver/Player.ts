@@ -14,12 +14,15 @@ export class ClientPlayer<ISharedVars> {
         onNet('fade-out-screen', (timeMS: number) => this.EVENT_FadeOutScreen(timeMS));
         onNet('fade-in-screen', (timeMS: number) => this.EVENT_FadeInScreen(timeMS));
 
-        setInterval(() => {
-            const [x, y, z] = GetEntityCoords(this.playerPed, false);
-            this._x = x;
-            this._y = y;
-            this._z = z;
-        }, 100);
+        this.updatePosition();
+        setInterval(() => this.updatePosition(), 100);
+    }
+
+    private updatePosition() {
+        const [x, y, z] = GetEntityCoords(this.playerPed, false);
+        this._x = x;
+        this._y = y;
+        this._y = z;
     }
 
     public get playerPed() {
@@ -35,6 +38,23 @@ export class ClientPlayer<ISharedVars> {
         this._y = v3.y;
         this._z = v3.z;
         SetEntityCoords(this.playerPed, v3.x, v3.y, v3.z, false, false, false, false);
+    }
+
+    public get rotation() {
+        const [x, y, z] = GetEntityRotation(this.playerPed, 2);
+        return new Vector3Mp(x, y, z);
+    }
+
+    public set rotation(rot: Vector3Mp) {
+        SetEntityRotation(this.playerPed, rot.x, rot.y, rot.z, 2, false);
+    }
+
+    public get heading() {
+        return GetEntityHeading(this.playerPed);
+    }
+
+    public set heading(h: number) {
+        SetEntityHeading(this.playerPed, h);
     }
 
     private EVENT_FadeInScreen(timeMS: number) {
