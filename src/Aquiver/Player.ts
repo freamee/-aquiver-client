@@ -22,7 +22,7 @@ export class ClientPlayer<ISharedVars> {
         const [x, y, z] = GetEntityCoords(this.playerPed, false);
         this._x = x;
         this._y = y;
-        this._y = z;
+        this._z = z;
     }
 
     public get playerPed() {
